@@ -11,26 +11,26 @@ import axios from "axios";
 import { useCurrentUserStore } from "../utils/authStore";
 import Login from "./Login.vue";
 const { URLSearchParams } = window;
-import { io } from "socket.io-client";
 
 const currentUserStore = useCurrentUserStore();
 const router = useRouter();
-const socket = io(import.meta.env.VITE_BACK_BASE_URL);
 const checkAuthentication = () => {
+  if (currentUserStore.authenticated == true) {
+    router.push("/welcome");
+  }
   const urlParams = new URLSearchParams(window.location.search);
   const token = urlParams.get("token");
-  const uid = urlParams.get("uid");
-  if (token && uid) {
-    getUserFromDb(uid, token);
+  const id = urlParams.get("id");
+  if (token && id) {
+    getUserFromDb(token);
   }
 };
 
-const getUserFromDb = async (uid: string, token: string) => {
-  const url = import.meta.env.VITE_BACK_BASE_URL + `/login/getuser/${uid}`;
+const getUserFromDb = async (token: string) => {
+  const url = import.meta.env.VITE_BACK_BASE_URL + `/usrs/getself/`;
   axios
     .get(url, { headers: { Authorization: `Bearer ${token}` } })
     .then((data) => currentUserStore.setUser(data.data, token))
-    .then(() => iMOnline())
     .then(() => router.push("/welcome"));
 };
 watch(
@@ -41,12 +41,19 @@ watch(
     }
   }
 );
-
-const iMOnline = () => {
-  socket.emit("online", { id: currentUserStore.uid });
-};
+watch(
+  () => currentUserStore.authenticated,
+  (authenticated) => {
+    if (authenticated == true) {
+      router.push("/welcome");
+    }
+  }
+);
 
 onMounted(() => {
+  if (currentUserStore.authenticated == true) {
+    router.push("/welcome");
+  }
   checkAuthentication();
 });
 </script>

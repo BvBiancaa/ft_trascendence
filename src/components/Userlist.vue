@@ -3,7 +3,7 @@
     <h1>LISTA UTENTI</h1>
   </div>
   <div class="container">
-    <div v-for="user in listaUtenti" :key="user.uid">
+    <div v-for="user in listaUtenti" :key="user.id">
       <Usercard :user="user" />
     </div>
   </div>
@@ -11,7 +11,7 @@
     <h1>UTENTI ONLINE A FIRENZE</h1>
   </div>
   <div class="container">
-    <div v-for="user in firenzeUsers" :key="user.uid">
+    <div v-for="user in firenzeUsers" :key="user.id">
       <div v-if="user">
         <Usercard :user="user" />
       </div>
@@ -31,7 +31,7 @@ const firenzeUsers = ref([]);
 const router = useRouter();
 
 const getUserList = async () => {
-  const url = import.meta.env.VITE_BACK_BASE_URL + `/login/getusers/`;
+  const url = import.meta.env.VITE_BACK_BASE_URL + `/usrs/getusers/`;
   axios
     .get(url, {
       headers: { Authorization: `Bearer ${currentUserStore.currentToken}` },

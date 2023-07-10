@@ -7,6 +7,9 @@ import { createPinia } from "pinia";
 import Welcome from "./components/Welcome.vue";
 import Userlist from "./components/Userlist.vue";
 import Chat from "./components/Chat.vue";
+import UserPanel from "./components/UserPanel.vue";
+import Register from "./components/CreateUsr.vue";
+import no42 from "./components/LoginNo42.vue"
 
 const routes = [
   {
@@ -24,6 +27,18 @@ const routes = [
   {
     path: "/chat",
     component: Chat,
+  },
+  {
+    path: "/userpanel",
+    component: UserPanel,
+  },
+  {
+    path: "/register",
+    component: Register,
+  },
+  {
+    path: "/no42",
+    component: no42,
   },
 ];
 

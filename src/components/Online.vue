@@ -1,23 +1,25 @@
 <template>
   <div>
     <div v-for="user in onlineUsersStore.onlineUsers">
-      {{ user.displayName }}
+      {{ user.nickName }}
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { useOnlineUsersStore } from "../utils/authStore";
-import { io } from "socket.io-client";
+import { useOnlineUsersStore, useOnlineSocketStore } from "../utils/authStore";
 import { onBeforeMount } from "vue";
+import { OnlineUser } from "../utils/interfaces";
 
-const socket = io(import.meta.env.VITE_BACK_BASE_URL);
 const onlineUsersStore = useOnlineUsersStore();
+const onlineSocketStore = useOnlineSocketStore();
 
 onBeforeMount(() => {
-  socket.on("whosonline", (onlineUsers) => {
-    onlineUsersStore.setUsers(onlineUsers);
-  });
+  if (onlineSocketStore.socket != null) {
+    onlineSocketStore.socket.on("whosonline", (data: OnlineUser[]) => {
+      onlineUsersStore.setUsers(data);
+    });
+  }
 });
 </script>
 

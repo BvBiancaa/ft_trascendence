@@ -7,14 +7,14 @@
 <script setup lang="ts"></script>
 
 <style scoped>
-
- div {
-  text-align:center;
+div {
+  height: 100px;
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid black;
   font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
-h1
-{
-  padding-top: 5%;
-  height: 10%;
+h1 {
+  margin-left: 20px;
 }
 </style>

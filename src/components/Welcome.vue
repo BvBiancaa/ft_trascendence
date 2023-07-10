@@ -1,21 +1,32 @@
 <template>
   <div class="body">
-    <div>
-    <button class="profile" style="{ backgroundImage: `url(${ currentUserStore.image })` }"></button>
+    <link href="https://fonts.cdnfonts.com/css/arcade-future-demo" rel="stylesheet">
+    <link href="https://fonts.cdnfonts.com/css/arcade-classic" rel="stylesheet">
+    <div :style="{ backgroundImage: 'url(' + currentUserStore.image + ')' }">
+      <router-link to="/profile">
+        <button class="profile"></button>
+      </router-link>  
     </div>
-    <h1>Welcome {{ currentUserStore.displayName }}</h1>
-    <router-link to="/userlist">
-      <button class="tolist">List users</button>
-    </router-link>
-    <router-link to="/chat">
-      <button class="tolist">Chat</button>
-    </router-link>
-    <router-link to="/play">
-      <button class="tolist">Play</button>
-    </router-link>
-    <router-link to="/leaderboard">
-      <button class="tolist">leaderboard</button>
-    </router-link>
+    <div class="content">
+    <div class="play_div">
+      <router-link to="/play">
+        <button class="play">Play</button>
+      </router-link>
+    </div>
+    <div class="buttons">
+      <router-link to="/userlist">
+        <button class="tolist">List users</button>
+      </router-link>
+      <router-link to="/chat">
+        <button class="tolist">Chat</button>
+      </router-link>
+      <router-link to="/leaderboard">
+        <button class="tolist">leaderboard</button>
+      </router-link>
+    </div>
+  </div>
+    <div class="end">
+    </div>
   </div>
 </template>
 
@@ -35,15 +46,20 @@ onMounted(() => {
 
 <style scoped>
 
+@import url('https://fonts.cdnfonts.com/css/arcade-classic');
+@import url('https://fonts.cdnfonts.com/css/varino');
+@import url('https://fonts.cdnfonts.com/css/arcade-future-demo');
+                
 .body
 {
-  object-fit: cover;
-  position: relative;
+  position: fixed;
   top: 0;
   left: 0;
-  height: 100%;
   width: 100%;
-  background-image: url("https://www.makte.it/wp-content/uploads/2019/01/MK8281M.jpg");
+  height: 100%;
+  background-image: url("https://www.gizmodo.com.au/wp-content/uploads/sites/2/2015/05/15/1252051448978474922.jpg?q=65&w=1280");
+  background-repeat: no-repeat;
+  background-size: cover;
   overflow: hidden;
 }
 
@@ -57,41 +73,61 @@ onMounted(() => {
   border-radius: 90%;
 }
 
+.content {
+  position: relative;
+  top: 50%;
+  left: 0%;
+  height: 70vh;
+}
+.play_div
+{
+  position: relative;
+}
+.play
+{
+  font-size: 80px;
+  width: 50%;
+  font-weight: 700;
+  padding: 0 1.6rem;
+  font-family: 'ArcadeClassic', sans-serif;
+  color: #ffffff;
+  background-color: #ca4541;
+  border-radius: 20px;                                       
+}
+
+.buttons
+{
+  position: relative;
+}
+
 div
 {
-  margin-top: 50px;
+  margin-top: 0px;
   text-align: center;
 }
 
-.avatar
-{
-  
-}
-
 h1 {
-  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  font-family: 'Varino', sans-serif;
   font-size: 20px;
 }
 .tolist {
   margin-top: 20px;
   background-image: linear-gradient(
     92.88deg,
-    #455eb5 9.16%,
-    #5643cc 43.89%,
-    #673fd7 64.72%
+    #e6584e 9.16%,
+    #c54c37 43.89%,
+    #ca4541 64.72%
   );
-  border-radius: 8px;
+  border-radius: 20px;
   border-style: none;
   box-sizing: border-box;
   color: #ffffff;
-  cursor: pointer;
   flex-shrink: 0;
-  font-family: "Inter UI", "SF Pro Display", -apple-system, BlinkMacSystemFont,
-    "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue",
-    sans-serif;
-  font-size: 16px;
+  font-family: 'Varino', sans-serif;
+  font-size: 1vh;
   font-weight: 500;
-  height: 4rem;
+  width: 15%;
+  height: 10vh;
   padding: 0 1.6rem;
   text-align: center;
   text-shadow: rgba(0, 0, 0, 0.25) 0 3px 8px;
@@ -99,12 +135,23 @@ h1 {
   user-select: none;
   -webkit-user-select: none;
   touch-action: manipulation;
-  margin: 10px;
+  margin: 20px;
+  cursor: default;
 }
 
 .tolist:hover {
   box-shadow: rgba(80, 63, 205, 0.5) 0 1px 30px;
   transition-duration: 0.1s;
+}
+
+.end
+{
+  position: fixed;
+  top: 78%;
+  left: 0%;
+  width: 100%;
+  height: 30%;
+  border-radius: 90%;
 }
 
 @media (min-width: 768px) {
