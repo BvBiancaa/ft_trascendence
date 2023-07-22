@@ -8,8 +8,10 @@ import Welcome from "./components/Welcome.vue";
 import Userlist from "./components/Userlist.vue";
 import Chat from "./components/Chat.vue";
 import UserPanel from "./components/UserPanel.vue";
+import Game from "./components/game/Game.vue";
 import Register from "./components/CreateUsr.vue";
-import no42 from "./components/LoginNo42.vue"
+import no42 from "./components/LoginNo42.vue";
+import Leaderboard from "./components/Leaderboard.vue";
 
 const routes = [
   {
@@ -29,7 +31,7 @@ const routes = [
     component: Chat,
   },
   {
-    path: "/userpanel",
+    path: "/profile",
     component: UserPanel,
   },
   {
@@ -37,8 +39,16 @@ const routes = [
     component: Register,
   },
   {
+    path: "/game",
+    component: Game,
+  },
+  {
     path: "/no42",
     component: no42,
+  },
+  {
+    path: "/leaderboard",
+    component: Leaderboard,
   },
 ];
 

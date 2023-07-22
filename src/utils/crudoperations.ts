@@ -12,8 +12,8 @@ export const createUser = async (
       password: password,
       login: login,
     });
-    return resp.status;
+    return resp;
   } catch (error) {
-    return 500;
+    return error.response;
   }
 };

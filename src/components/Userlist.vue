@@ -4,7 +4,11 @@
   </div>
   <div class="container">
     <div v-for="user in listaUtenti" :key="user.id">
-      <Usercard :user="user" />
+      <Usercard
+        :user="user"
+        v-if="user.id != currentUserStore.id"
+        :quarantadue="false"
+      />
     </div>
   </div>
   <div class="barra">
@@ -13,31 +17,31 @@
   <div class="container">
     <div v-for="user in firenzeUsers" :key="user.id">
       <div v-if="user">
-        <Usercard :user="user" />
+        <Usercard :user="user" :quarantadue="true" />
       </div>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { useCurrentUserStore } from "../utils/authStore";
+import { useCurrentUserStore } from "../utils/currentUserStore";
 import axios from "axios";
-import { onMounted, ref } from "vue";
+import { Ref, onMounted, ref } from "vue";
 import { useRouter } from "vue-router";
 import Usercard from "./Usercard.vue";
+import { UserForList } from "../utils/interfaces";
 const currentUserStore = useCurrentUserStore();
-const listaUtenti = ref();
+const listaUtenti: Ref<UserForList[]> = ref([]);
 const firenzeUsers = ref([]);
 const router = useRouter();
 
 const getUserList = async () => {
-  const url = import.meta.env.VITE_BACK_BASE_URL + `/usrs/getusers/`;
-  axios
-    .get(url, {
-      headers: { Authorization: `Bearer ${currentUserStore.currentToken}` },
-    })
-    .then((data) => (listaUtenti.value = data.data))
-    .catch(() => router.push("/"));
+  try {
+    const data = await currentUserStore.getUserList();
+    listaUtenti.value = data;
+  } catch (error) {
+    router.push("/");
+  }
 };
 
 const getQuarantadueFirenzeUsers = async () => {
@@ -57,7 +61,12 @@ const getQuarantadueFirenzeUsers = async () => {
 
 onMounted(() => {
   getUserList();
-  getQuarantadueFirenzeUsers();
+  if (currentUserStore.uid != null) {
+    getQuarantadueFirenzeUsers();
+  }
+  if (!currentUserStore.authenticated) {
+    router.push("/");
+  }
 });
 </script>
 

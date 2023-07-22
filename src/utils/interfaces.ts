@@ -11,13 +11,6 @@ export interface OnlineUsers {
   onlineUsers: OnlineUser[];
 }
 
-export interface Message {
-  chan: string;
-  msg: string;
-  timestamp: number;
-  user?: string;
-}
-
 export interface User {
   authenticated: boolean;
   currentToken: string;
@@ -33,8 +26,12 @@ export interface User {
   loses: number;
   elo: number;
   gamePlayed: number;
-  friends: number[] | null[];
+  friends: number[];
   listenersActive: boolean;
+  modalOpen: number;
+  lastOnline: string;
+  blockedUsrs: number[];
+  chanSettingsModal: string;
 }
 
 export interface OnlineSocket {
@@ -51,12 +48,74 @@ export interface ChannelFromOutside {
   isPrivate: boolean;
 }
 
+export interface ChanSettings {
+  isPrivate: boolean;
+  isPwdProtected: boolean;
+  password?: string;
+}
+
 export interface JoinedChan {
   name: string;
   isPrivate: boolean;
   users: OnlineUser[];
   password: string;
   isProtected: boolean;
-  messages: Message[];
+  messages: ChanMessage[];
   ops: OnlineUser[];
+  bannedUsers: OnlineUser[];
+  mutedUsers: OnlineUser[];
+}
+
+export interface Message {
+  id: number;
+  content: string;
+  createdAt: string;
+  senderId: number;
+  receiverId: number;
+  fromNick: string;
+}
+
+export interface Conversation {
+  id: number;
+  messages: Message[];
+  updated: boolean;
+  nick?: string;
+}
+
+export interface Conversations {
+  conversations: Conversation[];
+  fetched: boolean;
+}
+
+export interface ChanMessage {
+  chan: string;
+  msg: string;
+  timestamp: string;
+  user?: string;
+}
+
+export interface UserForList {
+  displayName: string;
+  elo: number;
+  email: string;
+  friends: number[];
+  gamePlayed: number;
+  id: number;
+  image: string;
+  login: string;
+  loses: number;
+  name: string;
+  nickName: string;
+  uid: number | null;
+  wins: number;
+}
+
+export interface UserForModal {
+  nick: string;
+  image: string;
+  wins: number;
+  loses: number;
+  elo: number;
+  gamePlayed: number;
+  id: number;
 }

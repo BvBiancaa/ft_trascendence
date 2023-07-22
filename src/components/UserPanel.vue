@@ -28,12 +28,11 @@
 </template>
 
 <script setup lang="ts">
-import axios from "axios";
-import { useCurrentUserStore } from "../utils/authStore";
+import { useCurrentUserStore } from "../utils/currentUserStore";
 import { ref } from "vue";
 import { useRouter } from "vue-router";
 import { onMounted } from "vue";
-import { useOnlineSocketStore } from "../utils/authStore";
+import { useOnlineSocketStore } from "../utils/onlineSocketStore";
 
 const currentUserStore = useCurrentUserStore();
 const newNick = ref("");
@@ -55,30 +54,20 @@ const changeImg = async () => {
   }
   const formData = new FormData();
   formData.append("file", selectedFile.value, selectedFile.value.name);
-  const fullUrl = import.meta.env.VITE_BACK_BASE_URL + "/usrs/img/";
-  try {
-    const updated = await axios.post(fullUrl, formData, {
-      headers: { Authorization: `Bearer ${currentUserStore.currentToken}` },
-    });
-    currentUserStore.updateUser(updated.data);
-  } catch (error) {
-    console.log(error);
-  }
+  await currentUserStore.changeImg(formData);
   inputReset.value++;
 };
 
 const changeNick = async () => {
-  const fullUrl = import.meta.env.VITE_BACK_BASE_URL + "/usrs/changenick/";
   const data = {
     nickName: newNick.value,
   };
   try {
-    const updated = await axios.patch(fullUrl, data, {
-      headers: { Authorization: `Bearer ${currentUserStore.currentToken}` },
-    });
-    currentUserStore.updateUser(updated.data);
+    await currentUserStore.updateUserInDb(data);
   } catch (error) {
-    console.log(error);
+    alert(`nickname ${newNick.value} gia in uso!`);
+    newNick.value = "";
+    return;
   }
   if (socket != null) {
     socket.emit("changeNick", newNick.value);
@@ -111,3 +100,4 @@ img {
   width: 300px;
 }
 </style>
+../utils/currentUserStore../utils/currentUserStore

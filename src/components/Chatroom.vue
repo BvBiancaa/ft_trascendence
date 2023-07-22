@@ -1,7 +1,18 @@
 <template>
   <div class="chatroom">
     <div class="room">
-      <h1>current channel: {{ currentChan?.name }}</h1>
+      <h1>
+        current channel: {{ currentChan?.name }}
+        <button
+          v-if="
+            currentChan?.ops.findIndex((op) => op.id == currentUserStore.id) !=
+            -1
+          "
+          @click="changeChanSettingsModal(props.chan)"
+        >
+          settings
+        </button>
+      </h1>
       <div class="messages">
         <ul>
           <li v-for="message in currentChan?.messages" :key="message.timestamp">
@@ -27,7 +38,8 @@
           <button
             v-if="
               currentChan?.ops.find((user) => user.id == currentUserStore.id) &&
-              user.id != currentUserStore.id
+              user.id != currentUserStore.id &&
+              !currentChan.ops.find((op) => op.id == user.id)
             "
             @click="() => kickUsr(user.id)"
           >
@@ -36,12 +48,45 @@
           <button
             v-if="
               currentChan?.ops.find((user) => user.id == currentUserStore.id) &&
-              user.id != currentUserStore.id
+              user.id != currentUserStore.id &&
+              !currentChan.ops.find((op) => op.id == user.id)
             "
             @click="() => opUsr(user.id)"
           >
-            O
+            +O
           </button>
+          <button
+            v-if="
+              currentChan?.ops.find((user) => user.id == currentUserStore.id) &&
+              user.id != currentUserStore.id &&
+              currentChan.ops.find((op) => op.id == user.id)
+            "
+            @click="() => deOpUsr(user.id)"
+          >
+            -O
+          </button>
+          <button
+            v-if="
+              currentChan?.ops.find((user) => user.id == currentUserStore.id) &&
+              user.id != currentUserStore.id &&
+              !currentChan.ops.find((op) => op.id == user.id)
+            "
+            @click="() => banUsr(user.id)"
+          >
+            BAN
+          </button>
+          <button
+            v-if="
+              currentChan?.ops.find((user) => user.id == currentUserStore.id) &&
+              user.id != currentUserStore.id &&
+              !currentChan.ops.find((op) => op.id == user.id) &&
+              !currentChan.mutedUsers.find((muted) => muted.id == user.id)
+            "
+            @click="() => muteUsr(user.id)"
+          >
+            MUTE
+          </button>
+          <button @click="currentUserStore.setModal(user.id)">profile</button>
         </li>
       </ul>
     </div>
@@ -51,12 +96,10 @@
 <script setup lang="ts">
 import { ref, watch } from "vue";
 import { Ref } from "vue";
-import {
-  useCurrentUserStore,
-  useJoinedChansStore,
-  useOnlineSocketStore,
-} from "../utils/authStore";
-import { JoinedChan, Message } from "../utils/interfaces";
+import { useCurrentUserStore } from "../utils/currentUserStore";
+import { JoinedChan, ChanMessage } from "../utils/interfaces";
+import { useJoinedChansStore } from "../utils/joinedChanStore";
+import { useOnlineSocketStore } from "../utils/onlineSocketStore";
 
 const props = defineProps<{
   chan: string;
@@ -70,13 +113,25 @@ const currentChan: Ref<JoinedChan | undefined> = ref(
 );
 const currentUserStore = useCurrentUserStore();
 
+const changeChanSettingsModal = (chan: string) => {
+  currentUserStore.setChanModal(chan);
+};
+
+const banUsr = (id: number) => {
+  socket?.emit("banUsr", {
+    name: props.chan,
+    user: id,
+    from: currentUserStore.id,
+  });
+};
+
 const sendMsg = () => {
   if (msg.value != "") {
     if (socket != null) {
-      const newMsg: Message = {
+      const newMsg: ChanMessage = {
         chan: props.chan,
         msg: msg.value,
-        timestamp: Date.now(),
+        timestamp: Date.now().toLocaleString(),
       };
       socket.emit("chanMsg", newMsg);
       msg.value = "";
@@ -97,6 +152,24 @@ const opUsr = (id: number) => {
     name: currentChan.value?.name,
     user: id,
     from: currentUserStore.id,
+  });
+};
+
+const deOpUsr = (id: number) => {
+  socket?.emit("deOpUsr", {
+    name: currentChan.value?.name,
+    user: id,
+    from: currentUserStore.id,
+  });
+};
+
+const muteUsr = (id: number) => {
+  const time = prompt("how long? (in seconds)");
+  socket?.emit("muteUsr", {
+    name: currentChan.value?.name,
+    user: id,
+    from: currentUserStore.id,
+    time: time,
   });
 };
 

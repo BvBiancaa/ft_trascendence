@@ -6,13 +6,29 @@
       <p><span>login:</span> {{ props.user.login }}</p>
       <p><span>nome:</span> {{ props.user.name }}</p>
       <p><span>email:</span> {{ props.user.email }}</p>
+      <button
+        v-if="!currentUserStore.friends.includes(user.id) && !props.quarantadue"
+        @click="() => currentUserStore.addFriend(user.id)"
+      >
+        add friend
+      </button>
+      <button
+        v-else-if="
+          currentUserStore.friends.includes(user.id) && !props.quarantadue
+        "
+        @click="() => currentUserStore.removeFriend(user.id)"
+      >
+        remove friend
+      </button>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-const props = defineProps(["user"]);
-console.log("user: ", props.user);
+const props = defineProps(["user", "quarantadue"]);
+import { useCurrentUserStore } from "../utils/currentUserStore";
+
+const currentUserStore = useCurrentUserStore();
 </script>
 
 <style scoped>
@@ -48,3 +64,4 @@ span {
   font-weight: bold;
 }
 </style>
+../utils/currentUserStore

@@ -1,15 +1,16 @@
 <template>
-  <div>
-    <Login />
-  </div>
+  <Login />
+  <!-- <LoginNo42 />
+    <CreateUsr /> -->
 </template>
 
 <script setup lang="ts">
 import { onMounted, watch } from "vue";
 import { useRouter } from "vue-router";
-import axios from "axios";
-import { useCurrentUserStore } from "../utils/authStore";
+import { useCurrentUserStore } from "../utils/currentUserStore";
 import Login from "./Login.vue";
+// import LoginNo42 from "./LoginNo42.vue";
+// import CreateUsr from "./CreateUsr.vue";
 const { URLSearchParams } = window;
 
 const currentUserStore = useCurrentUserStore();
@@ -27,11 +28,7 @@ const checkAuthentication = () => {
 };
 
 const getUserFromDb = async (token: string) => {
-  const url = import.meta.env.VITE_BACK_BASE_URL + `/usrs/getself/`;
-  axios
-    .get(url, { headers: { Authorization: `Bearer ${token}` } })
-    .then((data) => currentUserStore.setUser(data.data, token))
-    .then(() => router.push("/welcome"));
+  currentUserStore.getUserFromDb(token).then(() => router.push("/welcome"));
 };
 watch(
   () => router.currentRoute.value,
@@ -59,11 +56,10 @@ onMounted(() => {
 </script>
 
 <style scoped>
-div {
-  width: 100vw;
-  height: 100vh;
+.main {
+  border: 1px solid black;
   display: flex;
-  justify-content: center;
+  justify-content: space-around;
   align-items: center;
 }
 </style>
