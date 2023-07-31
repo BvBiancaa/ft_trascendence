@@ -38,6 +38,32 @@ Qui sono elencate le competenze chiave acquisite dopo aver completato il progett
 
 Ho svolto il progetto con [@mmarzano](https://github.com/mttmrz), [@lapenji](https://github.com/lapenji), [@bontxa](https://github.com/bontxa)
 
+<h2>Come far partire il programma?</h2>
+  
+  ```bash
+
+  ##per questioni di sicurezza gli .env non hanno dati, il programma partira' solo con gli .env completi.
+
+  $ docker-compose up -d
+
+  $ cd back
+  $ npm install
+  $ npm run start
+  
+  ## watch mode
+  $ npm run start:dev
+
+  ## production mode
+  $ npm run start:prod
+
+  $ cd ../front
+
+  $ npm install
+  $ npx vite --host
+
+  ```
+  
+
 -------------------
 
 <h3> English 🇬🇧</h3>
@@ -77,3 +103,29 @@ Key skills acquired after completing the project are listed here:
 - Error handling: The application must be free of errors and unmanaged alerts to ensure a smooth user experience.
 
 I did the project with [@mmarzano](https://github.com/mttmrz), [@lapenji](https://github.com/lapenji), [@bontxa](https://github.com/bontxa)
+
+<h2>How to start the program?</h2>
+  
+  ```bash
+
+  ##for security reasons the .envs have no data, the program will only start with the full .envs.
+
+   $ docker-compose up -d
+
+  $ cd back
+  $ npm install
+  $ npm run start
+  
+  ## watch mode
+  $ npm run start:dev
+
+  ## production mode
+  $ npm run start:prod
+
+  $ cd ../front
+
+  $ npm install
+  $ npx vite --host
+
+  ```
+  
