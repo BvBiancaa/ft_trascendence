@@ -1,0 +1,75 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id Int @id @default(autoincrement())
+
+  uid Int? @unique
+
+  name String
+
+  image String
+
+  login String @unique
+
+  displayName String
+
+  email String @unique
+
+  token42 String
+
+  nickName String @unique
+
+  friends Int[]
+
+  password String?
+
+  messagesSent Message[] @relation("SentMessages")
+
+  messagesReceived Message[] @relation("ReceivedMessages")
+
+  lastOnline DateTime?
+
+  blockedUsrs Int[]
+
+  twoFaSecret String?
+
+  twoFaActive Boolean
+
+  matches Match[]
+
+  isNew Boolean
+}
+
+model Message {
+  id         Int      @id @default(autoincrement())
+  content    String
+  createdAt  DateTime @default(now())
+  sender     User     @relation("SentMessages", fields: [senderId], references: [id])
+  senderId   Int
+  receiver   User     @relation("ReceivedMessages", fields: [receiverId], references: [id])
+  receiverId Int
+  fromNick   String
+  toNick     String
+}
+
+model Match {
+  id           Int   @id @default(autoincrement())
+  otherPlayerId Int
+  player1Score  Int
+  player2Score  Int
+  oneOrTwo      Int
+  won           Boolean
+  User          User? @relation(fields: [userId], references: [id])
+  userId        Int?
+}
+
