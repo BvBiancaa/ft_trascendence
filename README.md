@@ -44,22 +44,7 @@ Ho svolto il progetto con [@mmarzano](https://github.com/mttmrz), [@lapenji](htt
 
   ##per questioni di sicurezza gli .env non hanno dati, il programma partira' solo con gli .env completi.
 
-  $ docker-compose up -d
-
-  $ cd back
-  $ npm install
-  $ npm run start
-  
-  ## watch mode
-  $ npm run start:dev
-
-  ## production mode
-  $ npm run start:prod
-
-  $ cd ../front
-
-  $ npm install
-  $ npx vite --host
+  $ docker-compose up --build
 
   ```
   
@@ -110,22 +95,8 @@ I did the project with [@mmarzano](https://github.com/mttmrz), [@lapenji](https:
 
   ##for security reasons the .envs have no data, the program will only start with the full .envs.
 
-   $ docker-compose up -d
+   $ docker-compose up --build
 
-  $ cd back
-  $ npm install
-  $ npm run start
-  
-  ## watch mode
-  $ npm run start:dev
-
-  ## production mode
-  $ npm run start:prod
-
-  $ cd ../front
-
-  $ npm install
-  $ npx vite --host
 
   ```
   
