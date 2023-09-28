@@ -36,7 +36,7 @@ Qui sono elencate le competenze chiave acquisite dopo aver completato il progett
 - Implementazione del gioco Pong: La parte centrale del progetto è la creazione del gioco Pong, dove gli utenti possono giocare partite in tempo reale contro altri giocatori. Devono essere fornite opzioni di personalizzazione e un sistema di matchmaking per un'esperienza di gioco ottimale.
 - Gestione degli errori: L'applicazione deve essere priva di errori e avvisi non gestiti per garantire un'esperienza utente fluida e senza problemi.
 
-Ho svolto il progetto con [@mmarzano](https://github.com/mttmrz), [@lapenji](https://github.com/lapenji), [@bontxa](https://github.com/bontxa)
+Ho svolto il progetto con [@mttmrz](https://github.com/mttmrz), [@lapenji](https://github.com/lapenji), [@bontxa](https://github.com/bontxa)
 
 <h2>Come far partire il programma?</h2>
   
@@ -87,7 +87,7 @@ Key skills acquired after completing the project are listed here:
 - Pong game implementation: The central part of the project is the creation of the Pong game, where users can play real-time matches against other players. Customization options and a matchmaking system must be provided for an optimal gaming experience.
 - Error handling: The application must be free of errors and unmanaged alerts to ensure a smooth user experience.
 
-I did the project with [@mmarzano](https://github.com/mttmrz), [@lapenji](https://github.com/lapenji), [@bontxa](https://github.com/bontxa)
+I did the project with [@mttmrz](https://github.com/mttmrz), [@lapenji](https://github.com/lapenji), [@bontxa](https://github.com/bontxa)
 
 <h2>How to start the program?</h2>
   
